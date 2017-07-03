@@ -6,21 +6,12 @@ if has('vim_starting')
 endif
 call dein#begin(expand('~/.vim/dein/'))
 call dein#add(expand('~/.vim/dein/dein.vim/'))
-call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 call dein#add('scrooloose/nerdtree')
-call dein#add('Shougo/neosnippet.vim')
-call dein#add('Shougo/neosnippet-snippets')
+call dein#add('Shougo/neocomplete')
 call dein#add('bling/vim-airline')
 call dein#add('majutsushi/tagbar')
-call dein#add('terryma/vim-multiple-cursors')
-call dein#add('nelstrom/vim-markdown-folding')
-call dein#add('Lee-W/c.vim')
-call dein#add('tomasr/molokai')
-call dein#add('szw/vim-ctrlspace')
-call dein#add('nanotech/jellybeans.vim')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('Xuyuanp/nerdtree-git-plugin')
-call dein#add('jmcantrell/vim-virtualenv')
 call dein#end()
 
 
@@ -55,17 +46,12 @@ set background=dark
 "大多数SET
 "{{{
 
-
-
-
 "禁止生成临时文件
 set nobackup
 set noswapfile
 
-
 " 高亮列  hi colorcolumn
 autocmd FileType python,c set colorcolumn=76
-
 
 set nocp        "设置为扩展模式
 set hidden
@@ -77,9 +63,6 @@ set laststatus=2 "显示状态栏
 set foldenable
 set foldmethod=marker
 
-"set foldmethod=indent
-"set foldmethod=manual
-
 
 " Tab切换成4个空格
 set tabstop=4
@@ -89,15 +72,8 @@ autocmd FileType  html,javascript,css,yaml set tabstop=2
 " set expandtab
 autocmd FileType  make set noexpandtab
 
-" C语言自动缩进4空格
-set shiftwidth=4
-autocmd FileType  html,javascript,css,yaml set shiftwidth=2
-
-" 自动缩进
 set autoindent
 
-" 高亮当前行
-"set cursorline
 
 " 选中的文本高亮
 set hlsearch
@@ -132,6 +108,7 @@ set shortmess=atIW
 "一些MAP 和插件配置
 "{{{
 "
+let g:neocomplete#enable_at_startup = 1
 
 map gb :TagbarToggle<CR>
 let g:tagbar_width = 30
@@ -139,11 +116,6 @@ let g:tagbar_width = 30
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
-let g:jellybeans_overrides = {
-\    'Todo': { 'guifg': '303030', 'guibg': 'f0f000',
-\              'ctermfg': 'Black', 'ctermbg': 'Yellow',
-\              'attr': 'bold' },
-\}
 
 "配置NERDTREE
 let NERDChristmasTree=1 "装饰窗体!
@@ -158,86 +130,11 @@ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
-
-" For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-endif
-
-
-let g:C_CCompiler = 'clang'
-
-let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-\ }
-
 
 nnoremap to :tabnew<CR>
 nnoremap tn :tabnext<CR>
 nnoremap tp :tabprev<CR>
 
-
-function AddPYH()
-    call setline(1, "#!/usr/bin/env python")
-    call append(1, "# coding: UTF-8")
-    call append(2, "\"\"\" Module Description: ")
-    call append(3, "")
-    call append(4, "\"\"\"")
-    call append(5, "")
-    call append(6, "__date__ = \"" . strftime('%Y-%m-%d', localtime()) ."\"")
-    call append(7, "")
-    call append(8, "")
-    call append(9, "if __name__ == \"__main__\":")
-    call append(10, "    pass")
-    normal gg
-    normal j
-    normal j
-    normal j
-endf
-
-
 autocmd FileType python nnoremap gd :call append(line("."),'__import__("pdb").set_trace()')<CR>
 autocmd FileType python nnoremap gp :call append(line("."),'__import__("pprint").pprint(None)')<CR>
 
-autocmd FileType javascript nnoremap gu :call append(line("."),'"use strict";')<CR>
-autocmd FileType javascript nnoremap gd :call append(line("."),'debugger;')<CR>
-autocmd FileType javascript nnoremap gp :call append(line("."),'console.dir(1);')<CR>
-
-"autocmd bufnewfile *.py call AddPYH()
-
-
-"用空格键 莱开关折叠
-""nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
-
-"                                                      寒晨<chen1324@gmail.com>
