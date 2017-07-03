@@ -120,7 +120,6 @@ let g:airline_powerline_fonts = 1
 "配置NERDTREE
 let NERDChristmasTree=1 "装饰窗体!
 let NERDTreeHighlightCursorline=1 "高亮选中行
-let NERDTreeQuitOnOpen=1 "打开文件后自动关闭树
 let NERDTreeWinPos='left'  "显示的窗体位置
 nnoremap gt :NERDTreeToggle<cr>  "设置映射键位
 autocmd vimenter * NERDTree
