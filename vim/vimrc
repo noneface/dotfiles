@@ -116,6 +116,8 @@ let g:tagbar_width = 30
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
+let g:airline#extension#tabline#letft_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = '|'
 
 "配置NERDTREE
 let NERDChristmasTree=1 "装饰窗体!
@@ -123,11 +125,6 @@ let NERDTreeHighlightCursorline=1 "高亮选中行
 let NERDTreeWinPos='left'  "显示的窗体位置
 nnoremap gt :NERDTreeToggle<cr>  "设置映射键位
 autocmd vimenter * NERDTree
-
-
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 
 nnoremap to :tabnew<CR>
