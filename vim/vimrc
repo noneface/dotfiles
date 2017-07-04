@@ -10,12 +10,15 @@ call dein#add('scrooloose/nerdtree')
 call dein#add('Shougo/neocomplete')
 call dein#add('bling/vim-airline')
 call dein#add('majutsushi/tagbar')
+call dein#add('tpope/vim-fugitive')
+call dein#add('altercation/vim-colors-solarized')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('Xuyuanp/nerdtree-git-plugin')
 call dein#end()
 
 
 " }}}
+"
 
 "一些特殊配置项(非set)
 "{{{
