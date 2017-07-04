@@ -43,8 +43,8 @@ endif
 syntax enable
 set background=dark
 
-
 "}}}
+"
 
 "大多数SET
 "{{{
@@ -106,6 +106,7 @@ set listchars=tab:\|-,trail:=,extends:>,precedes:<
 set shortmess=atIW
 
 "}}}
+"
 
 
 "一些MAP 和插件配置
