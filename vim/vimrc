@@ -1,140 +1,94 @@
-" 插件管理
-" {{{
-" Required:
-if has('vim_starting')
-  set runtimepath+=~/.vim/repos/github.com/Shougo/dein.vim
-endif
-call dein#begin(expand('~/.vim/dein/'))
-call dein#add(expand('~/.vim/dein/dein.vim/'))
-call dein#add('scrooloose/nerdtree')
-call dein#add('Shougo/neocomplete')
-call dein#add('bling/vim-airline')
-call dein#add('majutsushi/tagbar')
-call dein#add('tpope/vim-fugitive')
-call dein#add('altercation/vim-colors-solarized')
-call dein#add('airblade/vim-gitgutter')
-call dein#add('Xuyuanp/nerdtree-git-plugin')
-call dein#end()
+" Auto add head info
+" .py file into add header
 
+function HeaderPython()
+		call setline(1, "#!/usr/bin/env/ python")
+		call append(1, "# -*- coding: utf-8 -*-")
+		call append(2, "# Author: noneface")
+		normal G
+		normal o
+endf
 
-" }}}
-"
+autocmd bufnewfile *.py call HeaderPython()
 
-"一些特殊配置项(非set)
-"{{{
+" normal settings
 
-"语法高亮
-if has("syntax")
-  syntax on
-endif
+set nocompatible
+filetype off
 
-
-"开启类型插件支持(pyflakes)
-filetype on
-filetype plugin on
-
-if has("autocmd")
-  filetype plugin indent on
-endif
-
-
-
-"配色方案
-syntax enable
-set background=dark
-
-"}}}
-"
-
-"大多数SET
-"{{{
-
-"禁止生成临时文件
-set nobackup
-set noswapfile
-
-" 高亮列  hi colorcolumn
-autocmd FileType python,c set colorcolumn=76
-
-set nocp        "设置为扩展模式
-set hidden
+set number
 set showtabline=0
 
-set laststatus=2 "显示状态栏
+syntax on
 
-"关于折叠
-set foldenable
-set foldmethod=marker
+set background=dark
 
-
-" Tab切换成4个空格
+set nowrap
 set tabstop=4
-autocmd FileType  html,javascript,css,yaml set tabstop=2
-
-"Tab转换为空格 公司fix
-" set expandtab
-autocmd FileType  make set noexpandtab
-
-set autoindent
-
-
-" 选中的文本高亮
+set expandtab
+set showmatch
+set laststatus=2
+set fenc=utf-8
 set hlsearch
-
-" encoding
-set encoding=utf-8
-set termencoding=utf-8
-if has('win32')
-    set fileencoding=chinese
-else
-    set fileencoding=utf-8
-endif
-set fileencodings=utf-8,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-" language messages zh_cn.utf-8
+set cursorline
+set t_Co=256
+"""""""""""""""""""
 
 
-"显示行号
-set number
+
+" Vundel plugin management
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'fholgado/minibufexpl.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Yggdroot/indentLine'
+Plugin 'tell-k/vim-autopep8'
+Plugin 'majutsushi/tagbar'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'kien/ctrlp.vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'tpope/vim-fugitive'
+Plugin 'davidhalter/jedi-vim'
+
+call vundle#end()
+filetype plugin indent on
+
+"""
+
+""  Plugins settings
+
+"" for indetLine
+let g:indentLine_char = '¦'
+let g:indentLine_enabled = 1
+let g:indentLine_color_term = 239
+let g:autopep8_disable_show_diff=1
+
+"" for NERDTree
+nnoremap gt :NERDTreeToggle<CR>
+let NERDChristmasTree=1
+let NERDTreeHighlightCursorline=1
+let NERDTreeWinPos='left'
+let NERDTreeIgnore=['^\.', '\~$', '\.pyc$', '\.swp$', '\.git$']
 
 
-"设置空格核缩进的提示
-set list
-set listchars=tab:\|-,trail:=,extends:>,precedes:<
-
-
-"启动时不显示提示
-set shortmess=atIW
-
-"}}}
-"
-
-
-"一些MAP 和插件配置
-"{{{
-"
-let g:neocomplete#enable_at_startup = 1
-
+"" for tagbar
 map gb :TagbarToggle<CR>
-let g:tagbar_width = 30
 
-let g:airline#extensions#tabline#enabled = 1
+
+"" for airline
+
 let g:airline_powerline_fonts = 1
-
-let g:airline#extension#tabline#letft_sep = ''
-let g:airline#extensions#tabline#left_alt_sep = '|'
-
-"配置NERDTREE
-let NERDChristmasTree=1 "装饰窗体!
-let NERDTreeHighlightCursorline=1 "高亮选中行
-let NERDTreeWinPos='left'  "显示的窗体位置
-nnoremap gt :NERDTreeToggle<cr>  "设置映射键位
-autocmd vimenter * NERDTree
+let g:airline#extensions#tabline#enable = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_seq = '|'
+let g:airline_theme="solarized"
+let g:airline_solarized_bg="dark"
 
 
-nnoremap to :tabnew<CR>
-nnoremap tn :tabnext<CR>
-nnoremap tp :tabprev<CR>
-
-autocmd FileType python nnoremap gd :call append(line("."),'__import__("pdb").set_trace()')<CR>
-autocmd FileType python nnoremap gp :call append(line("."),'__import__("pprint").pprint(None)')<CR>
-
+"" for theme
+colorscheme solarized
