@@ -11,16 +11,14 @@ if [ -z $cmd ]; then
     exit 1
 fi
 
-$cmd has -t $session
+$cmd -2 has -t $session
 
 if [ $? -ne 0 ]; then
-    $cmd new -d -n coding -s $session "vim"
-    $cmd splitw -v -p 15 -t $session "bash"
-    $cmd neww -n bash -t $session "bash"
-    $cmd splitw -h -p 50 -t $session "bash"
-    $cmd selectw -t $session:0
+    $cmd -2 new -d -n coding -s $session "bash"
+    $cmd -2 neww -n 4fun -t $session "bash"
+    $cmd -2 selectw -t $session:0
 fi
 
-$cmd att -t $session
+$cmd -2 att -t $session
 
 exit 0
