@@ -14,8 +14,8 @@ fi
 $cmd -2 has -t $session
 
 if [ $? -ne 0 ]; then
-    $cmd -2 new -d -n coding -s $session "bash"
-    $cmd -2 neww -n 4fun -t $session "bash"
+    $cmd -2 new -d -n coding -s $session "zsh"
+    $cmd -2 neww -n 4fun -t $session "zsh"
     $cmd -2 selectw -t $session:0
 fi
 
